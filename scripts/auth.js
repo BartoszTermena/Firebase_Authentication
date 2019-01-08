@@ -31,3 +31,25 @@ logout.addEventListener('click', (event) => {
         throw err;
     });
 });
+
+//login
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    //get user info
+    const email = loginForm['login-email'].value;
+    const password = loginForm['login-password'].value;
+
+    //login user
+    auth.signInWithEmailAndPassword(email, password)
+    .then(res => {
+        console.log('logged in!')
+        const modal = document.querySelector('#modal-login');
+        M.Modal.getInstance(modal).close();
+        loginForm.reset();
+    })
+    .catch(err => {
+        throw err;
+    })
+});
