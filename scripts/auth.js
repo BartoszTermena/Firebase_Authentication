@@ -1,3 +1,21 @@
+//get data from database
+db.collection('guides').get()
+.then(data => {
+    setupGuides(data.docs);
+})
+.catch(err => {
+    throw err;
+});
+
+//listen for auth status changes
+auth.onAuthStateChanged(user => {
+    if(!user) {
+        console.log('user logged out')
+    } else if (user) {
+        console.log('user logged in', user)
+    }
+});
+
 //signup
 const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (event) => {
@@ -23,13 +41,7 @@ signupForm.addEventListener('submit', (event) => {
 const logout = document.querySelector('#logout');
 logout.addEventListener('click', (event) => {
     event.preventDefault();
-    auth.signOut()
-    .then(() => {
-        console.log('logout')
-    })
-    .catch(err => {
-        throw err;
-    });
+    auth.signOut();
 });
 
 //login
@@ -44,7 +56,7 @@ loginForm.addEventListener('submit', (event) => {
     //login user
     auth.signInWithEmailAndPassword(email, password)
     .then(res => {
-        console.log('logged in!')
+
         const modal = document.querySelector('#modal-login');
         M.Modal.getInstance(modal).close();
         loginForm.reset();
