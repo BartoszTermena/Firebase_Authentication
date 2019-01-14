@@ -1,6 +1,21 @@
 const guideList = document.querySelector('.guides');
+const loggedOutLinks = document.querySelectorAll('.logged-out');
+const loggedInLinks = document.querySelectorAll('.logged-in');
+
+const setupUI = (user) => {
+  if(user) {
+    //toggle UI elements
+    loggedInLinks.forEach(item => item.style.display = 'block');
+    loggedOutLinks.forEach(item => item.style.display = 'none');
+  } else {
+    //toggle UI elements
+    loggedInLinks.forEach(item => item.style.display = 'none');
+    loggedOutLinks.forEach(item => item.style.display = 'block');
+  }
+};
 
 const setupGuides = (data) => {
+  if(data.length) {
   let html = '';
   data.forEach(doc => {
     const guide = doc.data();
@@ -13,8 +28,10 @@ const setupGuides = (data) => {
     html += li;
   });
   guideList.innerHTML = html;
-}
-
+  } else {
+  guideList.innerHTML = '<h5 class="center-align">Login to view guides</h5>'
+  }
+};
 // setup materialize components
 document.addEventListener('DOMContentLoaded', function() {
 
