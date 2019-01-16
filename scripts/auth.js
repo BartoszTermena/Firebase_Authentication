@@ -3,8 +3,7 @@
 auth.onAuthStateChanged(user => {
     if(user) {
         //get data from database
-        db.collection('guides').get()
-        .then(data => {
+        db.collection('guides').onSnapshot(data => {
             setupGuides(data.docs);
             setupUI(user);
         })
